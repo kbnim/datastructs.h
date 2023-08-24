@@ -3,11 +3,6 @@ C library of commonly used data types and data structures. It's a hobby project 
 
 As of now, the library is under development. Updates will be made irregularly and... eventually.
 
-Valuable resources that helped along the way:
-  * My university professor's lecture notes: http://aszt.inf.elte.hu/~asvanyi/ad/ad1jegyzet/ad1jegyzet.pdf
-  * https://people.inf.elte.hu/pgm6rw/algo/
-  * Jacob Sorber's YouTube channel: https://www.youtube.com/@JacobSorber
-
 ## Overview
 The library provides the following functionalities:
   * string
@@ -37,3 +32,9 @@ To-do list (for now):
     * pro's of doing both: more tools catering to more specific needs
     * con's of doing both: the only difference is that vectors are resizeable while arrays aren't. Apart from that, they're identical.
   * make the library installable
+
+## (Re)sources
+Valuable resources that helped along the way:
+  * My university professor's lecture notes: http://aszt.inf.elte.hu/~asvanyi/ad/ad1jegyzet/ad1jegyzet.pdf
+  * https://people.inf.elte.hu/pgm6rw/algo/
+  * Jacob Sorber's YouTube channel: https://www.youtube.com/@JacobSorber
