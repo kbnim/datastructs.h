@@ -1,5 +1,6 @@
 # datastructs.h
 C library of commonly used data types and data structures. It's a hobby project mainly for my own amusement and for practice, but it's also aimed to be portable and installable.
+
 As of now, the library is under development. Updates will be made irregularly and... eventually.
 
 Valuable resources that helped along the way:
