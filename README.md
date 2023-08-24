@@ -31,6 +31,8 @@ To-do list (for now):
   * array vs. vector: decide which one to implement
     * pro's of doing both: more tools catering to more specific needs
     * con's of doing both: the only difference is that vectors are resizeable while arrays aren't. Apart from that, they're identical.
+  * rename ``NO_WARNINGS`` to ``DATASTRUCTS_NO_WARNINGS``
+  * possibility to turn off warnings not just globally, but to individual sub-libraries (i.e. ``DATASTRUCTS_NO_WARNINGS_STRING``, etc.)
   * make the library installable
 
 ## (Re)sources
