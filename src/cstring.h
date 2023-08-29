@@ -186,7 +186,7 @@ long long string_convert_to_long       (const string* str);
 long long string_convert_to_long_base  (const string* str, const int base);
 
 // A synonym for converting strings to integers.
-#define string_convert_to_int string_convert_to_long
+#define string_convert_to_int (int)string_convert_to_long
 
 // Converts string to a decimal 'unsigned long long' value. Has the synonym 'string_convert_to_unsigned_int()'.
 unsigned long long string_convert_to_unsigned_long       (const string* str);
@@ -195,26 +195,21 @@ unsigned long long string_convert_to_unsigned_long       (const string* str);
 unsigned long long string_convert_to_unsigned_long_base  (const string* str, const int base);
 
 // A synonym for converting strings to unsigned integers.
-#define string_convert_to_unsigned_int string_convert_to_unsigned_ong
+#define string_convert_to_unsigned_int (unsigned int)string_convert_to_unsigned_long
 
 // Converts string to 'float'.
 float        string_convert_to_float          (const string* str);
 
-// Converts string to 'float' of an arbitrary base.
-float        string_convert_to_float_base     (const string* str, const int base);
-
 // Converts string to a decimal 'long double' value.
 long double  string_convert_to_double         (const string* str);
 
-// Converts string to 'long double' of an arbitrary base.
-long double  string_convert_to_double_base    (const string* str, const int base);
-
 // Converts string to boolean values. Note: true == True == TRUE == 1 and false == False == FALSE == 0.
-// If it's neither, it throws a warning message and returns 'false'.
 bool    string_convert_to_bool (const string* str);
 
 // Converts string to 'char'. For longers strings, only the first character is processed. 
 char    string_convert_to_char (const string* str);
+
+// Number -> String
 
 // Converts 'long long' of an arbitrary base to string.
 string* string_convert_long_base            (const long long integer, const int base);
@@ -230,9 +225,6 @@ string* string_convert_unsigned_long_base   (const unsigned long long integer, c
 
 // Converts decimal 'unsigned long long' to string.
 string* string_convert_unsigned_long        (const unsigned long long integer);
-
-// Converts 'long double' of an arbitrary base to string.
-string* string_convert_double_base          (const long double real, const int base);
 
 // Converts decimal 'long double' to string.
 string* string_convert_double               (const long double real);
@@ -256,8 +248,8 @@ string* string_format          (const char* formatting, ...);
 #define CSTIRNG_WARNMSG_PREFIX_TOO_LONG     "Warning: prefix is longer than the string itself. Returns false."
 #define CSTRING_WARNMSG_SUFFIX_TOO_LONG     "Warning: suffix is longer than the string itself. Returns false."
 #define CSTRING_WARNMSG_FILE_NOT_FOUND      "Warning: file does not exist. Writing string to file aborted."
-
 #define CSTRING_WARNMSG_OVERWRITE_TO_NULL   "Warning: string cannot be overwritten by 'const char*' array of value NULL. No changes have been made."
+#define CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS "Warning: the following characters were ignored during conversion: \"%s\""
 // #define CSTRING_WARNMSG_BLABLABLA "Warning: sample warning."
 
 /* ====================================== */

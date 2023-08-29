@@ -20,7 +20,7 @@ struct _string {
 
 // Generic error handling function.
 static void string_error_handling(const char* error_msg, const int error_code) {
-    #ifndef NO_WARNINGS
+    #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
         fprintf(stderr, "Error: %d\n%s\n", error_code, error_msg);
     #endif
     
@@ -42,7 +42,7 @@ static void string_check_null_string(const string* str) {
 }
 
 static void string_warning_handling(const char* warn_msg) {
-    #ifndef NO_WARNINGS
+    #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
         fprintf(stderr, "%s\n", warn_msg);
     #endif
 }
@@ -681,58 +681,126 @@ void string_print_line(const string* str) {
 // Converts string to a decimal 'long long' value. Has the synonym 'string_convert_to_int()'.
 long long string_convert_to_long(const string* str) {
     string_check_null_string(str);
-    return strtoll(str->data, NULL, 10);
+
+    #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
+        char unused_chars[str->length + 1];
+        memset(unused_chars, 0, str->length + 1);
+        long long result = strtoll(str->data, unused_chars, 10);
+        
+        if (strcmp(unused_chars, "") != 0) {
+            fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
+
+        }
+
+        return result;
+    #else
+        return strtoll(str->data, NULL, 10);
+    #endif
 }
 
 // Converts string to 'long long' integer of an arbitrary base.
 long long string_convert_to_long_base(const string* str, const int base) {
     string_check_null_string(str);
-    return strtoll(str->data, NULL, base);
+    #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
+        char unused_chars[str->length + 1];
+        memset(unused_chars, 0, str->length + 1);
+        long long result = strtoll(str->data, unused_chars, base);
+        
+        if (strcmp(unused_chars, "") != 0) {
+            fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
+
+        }
+
+        return result;
+    #else
+        return strtoll(str->data, NULL, base);
+    #endif
 }
 
 // Converts string to a decimal 'unsigned long long' value. Has the synonym 'string_convert_to_unsigned_int()'.
 unsigned long long string_convert_to_unsigned_long(const string* str) {
     string_check_null_string(str);
-    return strtoull(str->data, NULL, 10);
+
+    #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
+        char unused_chars[str->length + 1];
+        memset(unused_chars, 0, str->length + 1);
+        long long result = strtoull(str->data, unused_chars, 10);
+        
+        if (strcmp(unused_chars, "") != 0) {
+            fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
+
+        }
+
+        return result;
+    #else
+        return strtoull(str->data, NULL, 10);
+    #endif
 }
 
 // Converts string to 'unsigned long long' integer of an arbitrary base.
 unsigned long long string_convert_to_unsigned_long_base(const string* str, const int base) {
     string_check_null_string(str);
+
+    #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
+        char unused_chars[str->length + 1];
+        memset(unused_chars, 0, str->length + 1);
+        long long result = strtoull(str->data, unused_chars, base);
+        
+        if (strcmp(unused_chars, "") != 0) {
+            fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
+        }
+
+        return result;
+    #else
+        return strtoull(str->data, NULL, base);
+    #endif
     return strtoull(str->data, NULL, base);
 }
 
 // Converts string to 'float'.
 float string_convert_to_float(const string* str) {
     string_check_null_string(str);
-    return strtof(str->data, NULL, 10);
-}
 
-// Converts string to 'float' of an arbitrary base.
-float string_convert_to_float_base(const string* str, const int base) {
-    string_check_null_string(str);
-    return strtof(str->data, NULL, base);
+    #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
+        char unused_chars[str->length + 1];
+        memset(unused_chars, 0, str->length + 1);
+        long long result = strtof(str->data, unused_chars);
+        
+        if (strcmp(unused_chars, "") != 0) {
+            fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
+        }
+
+        return result;
+    #else
+        return strtof(str->data, NULL);
+    #endif
 }
 
 // Converts string to a decimal 'long double' value.
 long double string_convert_to_double(const string* str) {
     string_check_null_string(str);
-    return strtold(str->data, NULL, 10);
-}
 
-// Converts string to 'long double' of an arbitrary base.
-long double string_convert_to_double_base(const string* str, const int base) {
-    string_check_null_string(str);
-    return strtold(str->data, NULL, base);
+    #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
+        char unused_chars[str->length + 1];
+        memset(unused_chars, 0, str->length + 1);
+        long long result = strtold(str->data, unused_chars);
+        
+        if (strcmp(unused_chars, "") != 0) {
+            fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
+        }
+
+        return result;
+    #else
+        return strtold(str->data, NULL);
+    #endif
 }
 
 // Converts string to boolean values. Note: true == True == TRUE == 1 and false == False == FALSE == 0.
-// If it's neither, it throws a warning message and returns 'false'. This also means that "2" will return 'false'.
 bool string_convert_to_bool (const string* str) {
     string_check_null_string(str);
-    strcmp(str->data, "") == 0
+    
     if (strcmp(str->data, "true") == 0 || strcmp(str->data, "True") == 0 || 
-        strcmp(str->data, "TRUE") == 0 || strcmp(str->data, "1") == 0)  {
+        strcmp(str->data, "TRUE") == 0 || strcmp(str->data, "0") != 0)  {
             return true;
     } else return false;
 }
