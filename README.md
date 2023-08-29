@@ -25,14 +25,19 @@ We'll see...
 
 ## Further development
 To-do list (for now):
+  * tell C++ compilers to run in C-mode
   * finish string type
-    * conversions: string to number
+    * ~~conversions: string to number~~
     * conversions: number to string
+    * string format function: creates string by converting different types of variables
+      * use the same syntax to that of ``printf()`` / ``scanf()``
+      * ~~formatted i/o functions -> perhaps we shouldn't go overkill~~ good ol' ``printf()`` / ``scanf()`` will suffice since we do have the ability to convert a string to char*
   * array vs. vector: decide which one to implement
     * pro's of doing both: more tools catering to more specific needs
     * con's of doing both: the only difference is that vectors are resizeable while arrays aren't. Apart from that, they're identical.
-  * rename ``NO_WARNINGS`` to ``DATASTRUCTS_NO_WARNINGS``
-  * possibility to turn off warnings not just globally, but to individual sub-libraries (i.e. ``DATASTRUCTS_NO_WARNINGS_STRING``, etc.)
+  * compiler macros:
+    * ~~rename ``NO_WARNINGS`` to ``DATASTRUCTS_NO_WARNINGS``~~
+    * ~~possibility to turn off warnings not just globally, but to individual sub-libraries (i.e. ``DATASTRUCTS_NO_WARNINGS_STRING``, etc.)~~
   * make the library installable
 
 ## (Re)sources
