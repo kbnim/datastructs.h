@@ -27,10 +27,11 @@ We'll see...
 To-do list (for now):
   * tell C++ compilers to run in C-mode
   * finish string type
-    * ~~conversions: string to number~~
-    * conversions: number to string
-    * string format function: creates string by converting different types of variables
-      * use the same syntax to that of ``printf()`` / ``scanf()``
+    * string splitting to vector or linked list
+    * ~~conversions: string to number~~ FINISHED
+    * ~~conversions: number to string~~ FINISHED
+    * ~~string format function: creates string by converting different types of variables~~ FINISHED
+      * ~~use the same syntax to that of ``printf()`` / ``scanf()``~~
       * ~~formatted i/o functions -> perhaps we shouldn't go overkill~~ good ol' ``printf()`` / ``scanf()`` will suffice since we do have the ability to convert a string to char*
   * array vs. vector: decide which one to implement
     * pro's of doing both: more tools catering to more specific needs
