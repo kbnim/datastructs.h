@@ -695,7 +695,7 @@ string* string_format(const char* formatting, ...) {
         return new_string("");
     }
 
-	va_end(arguments01);
+    va_end(arguments01);
     va_start(arguments02, formatting);
     char buffer[buffer_size + 1];
     vsnprintf(buffer, buffer_size + 1, formatting, arguments02);
