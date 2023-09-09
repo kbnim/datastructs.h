@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h> // toupper(), tolower(), etc.
+#include <stdarg.h>
 
 #include "cstring.h"
 
@@ -450,6 +451,7 @@ string* string_truncate_right(const string* str) {
 
 // Replaces the character at the givn index. Prevents you from replacing the null terminator and inserting another extra one.
 void string_mut_char_at(string* str, char character, const size_t index) {
+    if (character == '\0') return;
     string_check_null_string(str);
     string_check_index(str, index);
     str->data[index] = character;
@@ -674,6 +676,34 @@ void string_print_line(const string* str) {
     puts(str->data);
 }
 
+// Creates a formatted string similarly to the 'printf()' function. 
+string* string_format(const char* formatting, ...) {
+    if (!formatting) {
+        string_warning_handling(CSTRING_WARNMSG_FORMATTING_NULL_FORMAT);
+        return new_string("");
+    }
+
+    va_list arguments01;
+    va_list arguments02;
+
+    va_start(arguments01, formatting);
+    int buffer_size = vsnprintf(NULL, 0, formatting, arguments01);
+
+    if (buffer_size < 0) {
+        string_warning_handling(CSTIRNG_WARNMSG_FORMATTING_INVALID_SIZE);
+        va_end(arguments01);
+        return new_string("");
+    }
+
+	va_end(arguments01);
+    va_start(arguments02, formatting);
+    char buffer[buffer_size + 1];
+    vsnprintf(buffer, buffer_size + 1, formatting, arguments02);
+    va_end(arguments02);
+
+    return new_string(buffer);
+}
+
 /* ========================================================================= */
 /* === Type conversion: converting strings to other primitive data types === */
 /* ========================================================================= */
@@ -683,9 +713,8 @@ long long string_convert_to_long(const string* str) {
     string_check_null_string(str);
 
     #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
-        char unused_chars[str->length + 1];
-        memset(unused_chars, 0, str->length + 1);
-        long long result = strtoll(str->data, unused_chars, 10);
+        char* unused_chars;
+        long long result = strtoll(str->data, &unused_chars, 10);
         
         if (strcmp(unused_chars, "") != 0) {
             fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
@@ -702,9 +731,8 @@ long long string_convert_to_long(const string* str) {
 long long string_convert_to_long_base(const string* str, const int base) {
     string_check_null_string(str);
     #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
-        char unused_chars[str->length + 1];
-        memset(unused_chars, 0, str->length + 1);
-        long long result = strtoll(str->data, unused_chars, base);
+        char* unused_chars;
+        long long result = strtoll(str->data, &unused_chars, base);
         
         if (strcmp(unused_chars, "") != 0) {
             fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
@@ -722,9 +750,8 @@ unsigned long long string_convert_to_unsigned_long(const string* str) {
     string_check_null_string(str);
 
     #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
-        char unused_chars[str->length + 1];
-        memset(unused_chars, 0, str->length + 1);
-        long long result = strtoull(str->data, unused_chars, 10);
+        char* unused_chars;
+        long long result = strtoull(str->data, &unused_chars, 10);
         
         if (strcmp(unused_chars, "") != 0) {
             fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
@@ -742,9 +769,8 @@ unsigned long long string_convert_to_unsigned_long_base(const string* str, const
     string_check_null_string(str);
 
     #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
-        char unused_chars[str->length + 1];
-        memset(unused_chars, 0, str->length + 1);
-        long long result = strtoull(str->data, unused_chars, base);
+        char* unused_chars;
+        long long result = strtoull(str->data, &unused_chars, base);
         
         if (strcmp(unused_chars, "") != 0) {
             fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
@@ -762,9 +788,8 @@ float string_convert_to_float(const string* str) {
     string_check_null_string(str);
 
     #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
-        char unused_chars[str->length + 1];
-        memset(unused_chars, 0, str->length + 1);
-        long long result = strtof(str->data, unused_chars);
+        char* unused_chars;
+        long long result = strtof(str->data, &unused_chars);
         
         if (strcmp(unused_chars, "") != 0) {
             fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);
@@ -781,9 +806,8 @@ long double string_convert_to_double(const string* str) {
     string_check_null_string(str);
 
     #if !(defined(DATASTRUCTS_NO_WARNINGS) || defined(DATASTRUCTS_CSTRING_NO_WARNINGS))
-        char unused_chars[str->length + 1];
-        memset(unused_chars, 0, str->length + 1);
-        long long result = strtold(str->data, unused_chars);
+        char* unused_chars;
+        long long result = strtold(str->data, &unused_chars);
         
         if (strcmp(unused_chars, "") != 0) {
             fprintf(stderr, CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS, unused_chars);

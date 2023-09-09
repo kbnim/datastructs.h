@@ -175,6 +175,9 @@ void    string_print       (const string* str);
 // Prints string to 'stdout' in a new line. Equivalent to a puts() call.
 void    string_print_line  (const string* str);
 
+// Creates a formatted string similarly to the 'printf()' function. 
+string* string_format          (const char* formatting, ...);
+
 /* ========================================================================= */
 /* === Type conversion: converting strings to other primitive data types === */
 /* ========================================================================= */
@@ -232,9 +235,6 @@ string* string_convert_double               (const long double real);
 // Converts 'bool' to string.
 string* string_convert_bool                 (const bool boolean);
 
-// Creates a formatted string similarly to the 'printf()' function. 
-string* string_format          (const char* formatting, ...);
-
 /* ===================================================================== */
 /* === String splitting: converting from and to arrays and, or lists === */
 /* ===================================================================== */
@@ -249,7 +249,9 @@ string* string_format          (const char* formatting, ...);
 #define CSTRING_WARNMSG_SUFFIX_TOO_LONG     "Warning: suffix is longer than the string itself. Returns false."
 #define CSTRING_WARNMSG_FILE_NOT_FOUND      "Warning: file does not exist. Writing string to file aborted."
 #define CSTRING_WARNMSG_OVERWRITE_TO_NULL   "Warning: string cannot be overwritten by 'const char*' array of value NULL. No changes have been made."
-#define CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS "Warning: the following characters were ignored during conversion: \"%s\""
+#define CSTRING_WARNMSG_CONVERSION_IGNORED_CHARS "Warning: the following characters were ignored during conversion: \"%s\"."
+#define CSTRING_WARNMSG_FORMATTING_NULL_FORMAT   "Warning: formatting string cannot be 'NULL'. Returns an empty string."
+#define CSTIRNG_WARNMSG_FORMATTING_INVALID_SIZE  "Warning: function 'vsnprintf()' returned an invalid result. Returns an empty string."
 // #define CSTRING_WARNMSG_BLABLABLA "Warning: sample warning."
 
 /* ====================================== */
